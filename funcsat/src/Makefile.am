@@ -44,9 +44,11 @@ funcsat/vec_reason_info.h: funcsat/vecgen.h.in
 funcsat/vec_uintptr.h: funcsat/vecgen.h.in
 	sed 's/@SHORTNAME@/uintptr/g' funcsat/vecgen.h.in | sed 's/@TYPE@/uintptr_t/g' >$@
 
-if HAVE_PDFTEX
-dist_doc_DATA = funcsat.pdf
-endif
+# Commented this out because cweave crashes mysteriously on funcsat.w these
+# days.
+# if HAVE_PDFTEX
+# dist_doc_DATA = funcsat.pdf
+# endif
 
 # learning.c funcsat/learning.h: learning.w
 # 	$(CTANGLE) $^ - learning.c
@@ -65,7 +67,7 @@ funcsat_internal.h: funcsat.h
 # %.c: %.w
 # 	$(CTANGLE) $< - $@
 %.tex: %.w
-	$(CWEAVE) $< - $@
+	$(CWEAVE) +h +p $< - $@
 %.pdf: %.tex
 	$(PDFTEX) -file-line-error $<
 	$(PDFTEX) -file-line-error $<

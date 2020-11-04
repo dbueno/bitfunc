@@ -3981,34 +3981,8 @@ My first representation was like picosat's, but much worse. This means clauses
 were ... big. 544 bits each! I need to cut this down. I'm going to make a few
 changes.
 
-@<Unused clause type@>=
-typedef struct clause
-{
-  literal *data;
 
-  uint32_t size;
-
-
-  uint32_t capacity;
-
-
-  bool isLearnt : 1;
-
-  bool isReason : 1;
-
-  bool inBinaryWatches : 1;
-  uint32_t lbdScore : 29;
-
-  struct clause *next[2];
-
-  struct clause *prev[2];
-
-  double activity;
-
-  unsigned id;
-} clause;
-
-@ The (new) clause representation.
+The (new) clause representation.
 
 \numberedlist
 
@@ -4135,17 +4109,6 @@ clause is {\it pinned} when any of the following hold:
 
 @ We need a clause pool.
 
-@<foobar@>=
-size_t sz = 1024;
-if (numClauses > funcsatNumClauses(f)) {
-  sz = numClauses;
-}
-f->pool = malloc(sz * sizeof(*f->pool));
-
-
-
-
-@
 
 @<External declarations@>=
 struct funcsat_config;

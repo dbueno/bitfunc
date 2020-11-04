@@ -63,7 +63,7 @@ foundEnd= (c==end) ,c= nx,nx= c->next[0])  \
  \
 
 /*14:*/
-#line 295 "./funcsat.w"
+#line 295 "funcsat.w"
 
 #include "funcsat/config.h"
 
@@ -90,7 +90,7 @@ foundEnd= (c==end) ,c= nx,nx= c->next[0])  \
 
 #define UNUSED(x) (void)(x)
 /*16:*/
-#line 366 "./funcsat.w"
+#line 366 "funcsat.w"
 
 funcsat_result funcsatSolve(funcsat*f)
 {
@@ -134,7 +134,7 @@ return f->lastResult;
 }
 
 /*:16*//*19:*/
-#line 603 "./funcsat.w"
+#line 603 "funcsat.w"
 
 funcsat_result funcsatAddClause(funcsat*f,clause*c)
 {
@@ -213,7 +213,7 @@ return result;
 
 
 /*:19*//*20:*/
-#line 708 "./funcsat.w"
+#line 708 "funcsat.w"
 
 funcsat_result funcsatPushAssumption(funcsat*f,literal p)
 {
@@ -250,7 +250,7 @@ return FS_UNKNOWN;
 }
 
 /*:20*//*21:*/
-#line 745 "./funcsat.w"
+#line 745 "funcsat.w"
 
 void funcsatPopAssumptions(funcsat*f,unsigned num){
 
@@ -276,7 +276,7 @@ restore_facts(f,&facts);
 }
 
 /*:21*//*22:*/
-#line 772 "./funcsat.w"
+#line 772 "funcsat.w"
 
 
 void funcsatReset(funcsat*f)
@@ -292,7 +292,7 @@ f->lastResult= FS_UNKNOWN;
 
 
 /*:22*//*27:*/
-#line 872 "./funcsat.w"
+#line 872 "funcsat.w"
 
 static inline void head_tail_clear(head_tail*ht){
 ht->hd= ht->tl= NULL;
@@ -326,7 +326,7 @@ ht1->tl= (c);}
 }
 
 /*:27*//*30:*/
-#line 944 "./funcsat.w"
+#line 944 "funcsat.w"
 
 inline void head_tail_print(funcsat*f,FILE*out,head_tail*l)
 {
@@ -346,14 +346,14 @@ fprintf(out,"warning: hd unset but tl set!\n");
 }
 
 /*:30*//*33:*/
-#line 983 "./funcsat.w"
+#line 983 "funcsat.w"
 
 bool bcp(funcsat*f)
 {
 bool isConsistent= true;
 
 /*50:*/
-#line 1283 "./funcsat.w"
+#line 1283 "funcsat.w"
 
 while(f->propq<f->trail.size){
 literal p= f->trail.data[f->propq];
@@ -382,17 +382,17 @@ fprintf(fs_dbgout(f)," %p\n",c);
 assert(false_lit==c->data[0]||false_lit==c->data[1]);
 assert(!c->nx);
 /*51:*/
-#line 1336 "./funcsat.w"
+#line 1336 "funcsat.w"
 
 if(funcsatValue(f,elt->lit)==true)goto watch_continue;
 
 
 
 /*:51*/
-#line 1310 "./funcsat.w"
+#line 1310 "funcsat.w"
 
 /*52:*/
-#line 1344 "./funcsat.w"
+#line 1344 "funcsat.w"
 
 if(c->data[0]==false_lit){
 literal tmp= c->data[0];
@@ -406,10 +406,10 @@ assert(c->data[1]==false_lit);
 
 
 /*:52*/
-#line 1311 "./funcsat.w"
+#line 1311 "funcsat.w"
 
 /*53:*/
-#line 1361 "./funcsat.w"
+#line 1361 "funcsat.w"
 
 for(literal*l= c->data+2;l!=c->data+c->size;l++){
 mbool v= funcsatValue(f,*l);
@@ -426,7 +426,7 @@ goto skip_watchelt_copy;
 }
 
 /*:53*/
-#line 1312 "./funcsat.w"
+#line 1312 "funcsat.w"
 
 
 otherlit= c->data[0];
@@ -434,7 +434,7 @@ litval= funcsatValue(f,otherlit);
 if(litval==true)goto watch_continue;
 if(litval==false){
 /*54:*/
-#line 1392 "./funcsat.w"
+#line 1392 "funcsat.w"
 
 isConsistent= false;
 f->conflictClause= c;
@@ -447,18 +447,18 @@ dclose(f,"bcp");
 goto bcp_conflict;
 
 /*:54*/
-#line 1318 "./funcsat.w"
+#line 1318 "funcsat.w"
 
 }else{
 /*55:*/
-#line 1405 "./funcsat.w"
+#line 1405 "funcsat.w"
 
 fslog(f,"bcp",2," => %i (%s:%d)\n",otherlit,__FILE__,__LINE__);
 trailPush(f,otherlit,reason_info_mk(f,c));
 f->conf->bumpUnitClause(f,c);
 
 /*:55*/
-#line 1320 "./funcsat.w"
+#line 1320 "funcsat.w"
 
 }
 watch_continue:
@@ -472,7 +472,7 @@ dclose(f,"bcp");
 }
 
 /*:50*/
-#line 988 "./funcsat.w"
+#line 988 "funcsat.w"
 
 
 bcp_conflict:
@@ -480,7 +480,7 @@ return isConsistent;
 }
 
 /*:33*//*38:*/
-#line 1096 "./funcsat.w"
+#line 1096 "funcsat.w"
 
 static inline void all_watches_init(funcsat*f)
 {
@@ -490,7 +490,7 @@ f->watches.capacity= 1<<7;
 }
 
 /*:38*//*39:*/
-#line 1106 "./funcsat.w"
+#line 1106 "funcsat.w"
 
 static inline void all_watches_destroy(funcsat*f)
 {
@@ -498,7 +498,7 @@ free(f->watches.wlist);
 }
 
 /*:39*//*45:*/
-#line 1187 "./funcsat.w"
+#line 1187 "funcsat.w"
 
 static int compare_pointer(const void*x,const void*y)
 {
@@ -511,7 +511,7 @@ else return 0;
 
 
 /*:45*//*47:*/
-#line 1204 "./funcsat.w"
+#line 1204 "funcsat.w"
 
 static inline void watchlist_check(funcsat*f,literal l)
 {
@@ -570,7 +570,7 @@ vectorDestroy(clauses),free(clauses);
 
 
 /*:47*//*48:*/
-#line 1262 "./funcsat.w"
+#line 1262 "funcsat.w"
 
 
 static inline void watches_check(funcsat*f)
@@ -584,7 +584,7 @@ watchlist_check(f,neg);
 }
 
 /*:48*//*56:*/
-#line 1412 "./funcsat.w"
+#line 1412 "funcsat.w"
 
 static inline struct watchlist_elt*watch_lit(funcsat*f,struct watchlist*wl,clause*c)
 {
@@ -597,7 +597,7 @@ wl->elts[watchlist_head_size(wl)].cls= c;
 }else{
 assert(watchlist_head_size(wl)>=WATCHLIST_HEAD_SIZE_MAX);
 /*57:*/
-#line 1445 "./funcsat.w"
+#line 1445 "funcsat.w"
 
 if(wl->capacity> 0){
 if(watchlist_rest_size(wl)>=wl->capacity){
@@ -610,7 +610,7 @@ wl->capacity= 8;
 }
 
 /*:57*/
-#line 1423 "./funcsat.w"
+#line 1423 "funcsat.w"
 
 ret= &wl->rest[watchlist_rest_size(wl)];
 wl->rest[watchlist_rest_size(wl)].cls= c;
@@ -632,7 +632,7 @@ elt->lit= (c->size==2?c->data[1]:c->data[0]);
 }
 
 /*:56*//*59:*/
-#line 1468 "./funcsat.w"
+#line 1468 "funcsat.w"
 
 static inline void addWatch(funcsat*f,clause*c)
 {
@@ -651,7 +651,7 @@ c->is_watched= true;
 }
 
 /*:59*//*60:*/
-#line 1489 "./funcsat.w"
+#line 1489 "funcsat.w"
 
 static inline void makeWatchable(funcsat*f,clause*c)
 {
@@ -666,7 +666,7 @@ j++;
 }
 
 /*:60*//*62:*/
-#line 1511 "./funcsat.w"
+#line 1511 "funcsat.w"
 
 static void fs_watches_print(funcsat*f,FILE*out,literal p)
 {
@@ -698,7 +698,7 @@ fprintf(out,"[EMPTY SLOT]\n");
 
 
 /*:62*//*65:*/
-#line 1568 "./funcsat.w"
+#line 1568 "funcsat.w"
 
 static inline clause*getReason(funcsat*f,literal l)
 {
@@ -714,7 +714,7 @@ return NULL;
 
 
 /*:65*//*67:*/
-#line 1590 "./funcsat.w"
+#line 1590 "funcsat.w"
 
 void funcsatAddReasonHook(funcsat*f,uintptr_t ty,clause*(*hook)(funcsat*f,literal l))
 {
@@ -722,7 +722,7 @@ vectorPushAt(&f->reason_hooks,hook,ty);
 }
 
 /*:67*//*69:*/
-#line 1606 "./funcsat.w"
+#line 1606 "funcsat.w"
 
 static inline uintptr_t reason_info_mk(funcsat*f,clause*cls)
 {
@@ -737,7 +737,7 @@ return ret;
 }
 
 /*:69*//*70:*/
-#line 1624 "./funcsat.w"
+#line 1624 "funcsat.w"
 
 static inline void reason_info_release(funcsat*f,uintptr_t ri)
 {
@@ -747,7 +747,7 @@ f->reason_infos_freelist= ri;
 }
 
 /*:70*//*75:*/
-#line 1662 "./funcsat.w"
+#line 1662 "funcsat.w"
 
 void trailPush(funcsat*f,literal p,uintptr_t reason_info_idx)
 {
@@ -772,7 +772,7 @@ f->reason->data[v]= reason_info_idx;
 }
 
 /*:75*//*76:*/
-#line 1692 "./funcsat.w"
+#line 1692 "funcsat.w"
 
 literal trailPop(funcsat*f,head_tail*facts)
 {
@@ -817,7 +817,7 @@ return p;
 }
 
 /*:76*//*77:*/
-#line 1737 "./funcsat.w"
+#line 1737 "funcsat.w"
 
 static inline literal trailPeek(funcsat*f)
 {
@@ -826,7 +826,7 @@ return p;
 }
 
 /*:77*//*79:*/
-#line 1765 "./funcsat.w"
+#line 1765 "funcsat.w"
 
 static void jailClause(funcsat*f,literal trueLit,clause*c)
 {
@@ -858,7 +858,7 @@ memcpy(&f->jail[v],&tmp,sizeof(tmp));
 }
 
 /*:79*//*80:*/
-#line 1841 "./funcsat.w"
+#line 1841 "funcsat.w"
 
 literal funcsatMakeDecision(funcsat*f,void*p)
 {
@@ -888,7 +888,7 @@ return l;
 }
 
 /*:80*//*82:*/
-#line 1879 "./funcsat.w"
+#line 1879 "funcsat.w"
 
 void varBumpScore(funcsat*f,variable v)
 {
@@ -915,7 +915,7 @@ fslog(f,"decide",5,"bumped %u from %.30f to %.30f\n",v,origActivity,*activity_v)
 }
 
 /*:82*//*83:*/
-#line 1908 "./funcsat.w"
+#line 1908 "funcsat.w"
 
 static inline int activity_compare(double x,double y)
 {
@@ -925,7 +925,7 @@ else return 0;
 }
 
 /*:83*//*86:*/
-#line 1951 "./funcsat.w"
+#line 1951 "funcsat.w"
 
 static inline unsigned bh_var2pos(funcsat*f,variable v)
 {
@@ -943,7 +943,7 @@ return(unsigned)(n-f->binvar_heap)<=f->binvar_heap_size;
 }
 
 /*:86*//*87:*/
-#line 1970 "./funcsat.w"
+#line 1970 "funcsat.w"
 
 
 static inline double*bh_var2act(funcsat*f,variable v)
@@ -952,7 +952,7 @@ return&f->binvar_heap[bh_var2pos(f,v)].act;
 }
 
 /*:87*//*88:*/
-#line 1981 "./funcsat.w"
+#line 1981 "funcsat.w"
 
 static inline struct bh_node*bh_top(funcsat*f)
 {
@@ -984,7 +984,7 @@ return f->binvar_heap_size;
 }
 
 /*:88*//*89:*/
-#line 2015 "./funcsat.w"
+#line 2015 "funcsat.w"
 
 static inline struct bh_node*bh_node_get(funcsat*f,variable v)
 {
@@ -993,7 +993,7 @@ return f->binvar_heap+f->binvar_pos[v];
 
 
 /*:89*//*91:*/
-#line 2047 "./funcsat.w"
+#line 2047 "funcsat.w"
 
 static inline void bh_swap(funcsat*f,struct bh_node**x,struct bh_node**y)
 {
@@ -1030,7 +1030,7 @@ assert(f->binvar_heap[bh_var2pos(f,v)].var==v);
 
 
 /*:91*//*92:*/
-#line 2085 "./funcsat.w"
+#line 2085 "funcsat.w"
 
 static inline void bh_bubble_down(funcsat*f,struct bh_node*e)
 {
@@ -1062,7 +1062,7 @@ return top->var;
 }
 
 /*:92*//*93:*/
-#line 2116 "./funcsat.w"
+#line 2116 "funcsat.w"
 
 static inline void bh_increase_activity(funcsat*f,variable v,double act_new)
 {
@@ -1075,7 +1075,7 @@ bh_bubble_up(f,n);
 }
 
 /*:93*//*95:*/
-#line 2132 "./funcsat.w"
+#line 2132 "funcsat.w"
 
 static void bh_check_node(funcsat*f,struct bh_node*x)
 {
@@ -1102,7 +1102,7 @@ assert(bh_node_get(f,i)->var==i);
 }
 
 /*:95*//*101:*/
-#line 2191 "./funcsat.w"
+#line 2191 "funcsat.w"
 
 static void bh_padding(funcsat*f,const char*s,int x)
 {
@@ -1142,7 +1142,7 @@ fprintf(fs_dbgout(f),"\n");
 }
 
 /*:101*//*103:*/
-#line 2245 "./funcsat.w"
+#line 2245 "funcsat.w"
 
 bool analyze_conflict(funcsat*f)
 {
@@ -1212,7 +1212,7 @@ return true;
 }
 
 /*:103*//*104:*/
-#line 2316 "./funcsat.w"
+#line 2316 "funcsat.w"
 
 bool findUips(funcsat*f,unsigned c,head_tail*facts,literal*uipLit)
 {
@@ -1231,18 +1231,18 @@ clause*reason= NULL;
 do{
 
 /*105:*/
-#line 2380 "./funcsat.w"
+#line 2380 "funcsat.w"
 
 while(!hasLitPos(f,p= trailPeek(f))){
 trailPop(f,facts);
 }
 
 /*:105*/
-#line 2333 "./funcsat.w"
+#line 2333 "funcsat.w"
 
 reason= getReason(f,p);
 /*106:*/
-#line 2388 "./funcsat.w"
+#line 2388 "funcsat.w"
 
 fs_ifdbg(f,"findUips",6){
 fslog(f,"findUips",6,"resolving ");
@@ -1258,17 +1258,17 @@ variable num= resolveWithPos(f,p,&f->uipClause,reason);
 if(f->uipClause.size==0)return true;
 
 /*:106*/
-#line 2335 "./funcsat.w"
+#line 2335 "funcsat.w"
 
 /*107:*/
-#line 2406 "./funcsat.w"
+#line 2406 "funcsat.w"
 
 c= c-1+num;
 c= resetLevelCount(f,c,facts);
 
 
 /*:107*/
-#line 2336 "./funcsat.w"
+#line 2336 "funcsat.w"
 
 if(f->conf->useSelfSubsumingResolution){
 
@@ -1280,12 +1280,12 @@ checkSubsumption(f,p,&f->uipClause,reason,!(c> 1));
 assert(c==1||f->decisionLevel==0);
 
 /*108:*/
-#line 2415 "./funcsat.w"
+#line 2415 "funcsat.w"
 
 if(f->decisionLevel==0)return true;
 
 /*:108*/
-#line 2346 "./funcsat.w"
+#line 2346 "funcsat.w"
 
 
 
@@ -1300,7 +1300,7 @@ assert(f->decisionLevel!=VARIABLE_MAX);
 
 
 /*109:*/
-#line 2422 "./funcsat.w"
+#line 2422 "funcsat.w"
 
 
 clause*newUip= clauseAlloc((&f->uipClause)->size);
@@ -1318,7 +1318,7 @@ vectorPush(&f->learnedClauses,newUip);
 ++f->numLearnedClauses;
 
 /*110:*/
-#line 2453 "./funcsat.w"
+#line 2453 "funcsat.w"
 
 literal watch2= 0,watch2_level= -1;
 unsigned pPos= getLitPos(f,p);
@@ -1342,7 +1342,7 @@ newUip->data[watch2]= tmp;
 
 
 /*:110*/
-#line 2438 "./funcsat.w"
+#line 2438 "funcsat.w"
 
 f->conf->bumpLearned(f,newUip);
 fs_ifdbg(f,"findUips",5){
@@ -1352,7 +1352,7 @@ fprintf(fs_dbgout(f),"\n");
 }
 
 /*:109*/
-#line 2359 "./funcsat.w"
+#line 2359 "funcsat.w"
 
 }while(more&&numUipsLearned<f->conf->numUipsToLearn);
 bool foundDecision= isDecision(f,fs_lit2var(p));
@@ -1369,7 +1369,7 @@ dclose(f,"findUips");
 fslog(f,"findUips",5,"done\n");
 
 /*112:*/
-#line 2506 "./funcsat.w"
+#line 2506 "funcsat.w"
 
 #if 0
 if(f->conf->useSelfSubsumingResolution){
@@ -1407,14 +1407,14 @@ f->subsumed.size= 0;
 #endif
 
 /*:112*/
-#line 2374 "./funcsat.w"
+#line 2374 "funcsat.w"
 
 
 return f->uipClause.size==0||c==0;
 }
 
 /*:104*//*111:*/
-#line 2478 "./funcsat.w"
+#line 2478 "funcsat.w"
 
 static unsigned resetLevelCount(funcsat*f,unsigned c,head_tail*facts)
 {
@@ -1440,7 +1440,7 @@ return c;
 
 
 /*:111*//*113:*/
-#line 2543 "./funcsat.w"
+#line 2543 "funcsat.w"
 
 static void cleanSeen(funcsat*f,variable top)
 {
@@ -1543,7 +1543,7 @@ f->allLevels.data[levelOf(f,v)]= false;
 
 
 /*:113*//*115:*/
-#line 2651 "./funcsat.w"
+#line 2651 "funcsat.w"
 
 static char*dot_lit2label(literal p)
 {
@@ -1613,7 +1613,7 @@ fclose(dotfile);
 
 
 /*:115*//*118:*/
-#line 2750 "./funcsat.w"
+#line 2750 "funcsat.w"
 
 bool propagateFacts(funcsat*f,head_tail*facts,literal uipLit)
 {
@@ -1626,7 +1626,7 @@ clause*prev,*curr,*next;
 for_head_tail(facts,prev,curr,next){
 ++f->numUnitFactProps,++cnt;
 /*119:*/
-#line 2790 "./funcsat.w"
+#line 2790 "funcsat.w"
 
 fs_ifdbg(f,"bcp",5){
 fslog(f,"bcp",5,"");
@@ -1684,7 +1684,7 @@ fslog(f,"bcp",1," => X\n");
 }
 
 /*:119*/
-#line 2761 "./funcsat.w"
+#line 2761 "funcsat.w"
 
 if(!isConsistent)break;
 }
@@ -1712,7 +1712,7 @@ return isConsistent;
 }
 
 /*:118*//*120:*/
-#line 2853 "./funcsat.w"
+#line 2853 "funcsat.w"
 
 static inline mbool tentativeValue(funcsat*f,literal p)
 {
@@ -1724,7 +1724,7 @@ else return unknown;
 }
 
 /*:120*//*126:*/
-#line 2924 "./funcsat.w"
+#line 2924 "funcsat.w"
 
 void incLubyRestart(funcsat*f,bool skip);
 
@@ -1817,8 +1817,8 @@ f->waslubymaxdelta= 0;
 }
 
 
-/*:126*//*149:*/
-#line 4216 "./funcsat.w"
+/*:126*//*147:*/
+#line 4179 "funcsat.w"
 
 void fs_vig_print(funcsat*f,const char*path)
 {
@@ -1858,8 +1858,8 @@ if(0!=fclose(dot))perror("fclose");
 }
 
 
-/*:149*//*153:*/
-#line 4396 "./funcsat.w"
+/*:147*//*151:*/
+#line 4359 "funcsat.w"
 
 DEFINE_HASHTABLE(fsLogMapInsert,fsLogMapSearch,fsLogMapRemove,char,int)
 
@@ -1899,8 +1899,8 @@ return 0;
 }
 
 
-/*:153*//*154:*/
-#line 4437 "./funcsat.w"
+/*:151*//*152:*/
+#line 4400 "funcsat.w"
 
 int64_t readHeader(int(*getChar)(void*),void*,funcsat*func);
 void readClauses(
@@ -2127,8 +2127,8 @@ void varBumpScore(funcsat*f,variable v);
 static variable computeLbdScore(funcsat*f,clause*c);
 
 
-/*:154*//*155:*/
-#line 4664 "./funcsat.w"
+/*:152*//*153:*/
+#line 4627 "funcsat.w"
 
 
 
@@ -2451,8 +2451,8 @@ varDecayActivity(f);
 claDecayActivity(f);
 }
 
-/*:155*//*157:*/
-#line 5147 "./funcsat.w"
+/*:153*//*155:*/
+#line 5110 "funcsat.w"
 
 unsigned int fsLitHash(void*lIn)
 {
@@ -2684,8 +2684,8 @@ dst->lbdScore= src->lbdScore;
 
 
 
-/*:157*//*158:*/
-#line 5380 "./funcsat.w"
+/*:155*//*156:*/
+#line 5343 "funcsat.w"
 
 
 
@@ -2754,8 +2754,8 @@ return count;
 }
 
 
-/*:158*//*160:*/
-#line 5586 "./funcsat.w"
+/*:156*//*158:*/
+#line 5549 "funcsat.w"
 
 
 extern inline mbool funcsatValue(funcsat*f,literal p)
@@ -2821,8 +2821,8 @@ static inline void spliceUnitFact(funcsat*f,literal l,clause*c)
 head_tail_add(&f->unit_facts[fs_lit2var(l)],c);
 }
 
-/*:160*//*163:*/
-#line 5665 "./funcsat.w"
+/*:158*//*161:*/
+#line 5628 "funcsat.w"
 
 
 static char parse_read_char(funcsat*f,FILE*solutionFile){
@@ -3011,19 +3011,19 @@ goto state_exit;
 state_exit:
 return result;
 }
-/*:163*/
-#line 320 "./funcsat.w"
+/*:161*/
+#line 320 "funcsat.w"
 
 
 
 
 /*:14*//*29:*/
-#line 939 "./funcsat.w"
+#line 939 "funcsat.w"
 
 
 
 /*:29*//*128:*/
-#line 3025 "./funcsat.w"
+#line 3025 "funcsat.w"
 
 
 funcsat_config funcsatDefaultConfig= {
@@ -3052,7 +3052,7 @@ funcsat_config funcsatDefaultConfig= {
 };
 
 /*:128*//*130:*/
-#line 3068 "./funcsat.w"
+#line 3068 "funcsat.w"
 
 
 funcsat*funcsatInit(funcsat_config*conf)
@@ -3063,7 +3063,7 @@ f->conf= conf;
 f->conflictClause= NULL;
 f->propq= 0;
 /*129:*/
-#line 3054 "./funcsat.w"
+#line 3054 "funcsat.w"
 
 f->varInc= 1.f;
 f->varDecay= 0.95f;
@@ -3078,7 +3078,7 @@ f->learnedSizeInc= 1.1f;
 
 
 /*:129*/
-#line 3077 "./funcsat.w"
+#line 3077 "funcsat.w"
 
 fslog(f,"sweep",1,"set maxLearned to %f\n",f->maxLearned);
 fslog(f,"sweep",1,"set 1/f->claDecoy to %f\n",1.f/f->claDecay);
@@ -3089,14 +3089,14 @@ f->waslubymaxdelta= false;
 
 f->numVars= 0;
 /*66:*/
-#line 1584 "./funcsat.w"
+#line 1584 "funcsat.w"
 
 f->reason= vec_uintptr_init(2);
 vec_uintptr_push(f->reason,NO_REASON);
 vectorInit(&f->reason_hooks,2);
 
 /*:66*//*71:*/
-#line 1634 "./funcsat.w"
+#line 1634 "funcsat.w"
 
 f->reason_infos_freelist= UINT_MAX;
 f->reason_infos= vec_reason_info_init(2);
@@ -3104,7 +3104,7 @@ f->reason_infos->size= 0;
 
 
 /*:71*//*97:*/
-#line 2162 "./funcsat.w"
+#line 2162 "funcsat.w"
 
 CallocX(f->binvar_heap,2,sizeof(*f->binvar_heap));
 CallocX(f->binvar_pos,2,sizeof(*f->binvar_pos));
@@ -3112,7 +3112,7 @@ f->binvar_heap_size= 0;
 
 
 /*:97*//*122:*/
-#line 2871 "./funcsat.w"
+#line 2871 "funcsat.w"
 
 CallocX(f->unit_facts,2,sizeof(*f->unit_facts));
 f->unit_facts_size= 1;
@@ -3120,7 +3120,7 @@ f->unit_facts_capacity= 2;
 
 
 /*:122*/
-#line 3086 "./funcsat.w"
+#line 3086 "funcsat.w"
 
 clauseInit(&f->assumptions,0);
 posvecInit(&f->model,2);
@@ -3156,7 +3156,7 @@ return f;
 
 
 /*:130*//*131:*/
-#line 3121 "./funcsat.w"
+#line 3121 "funcsat.w"
 
 funcsat_config*funcsatConfigInit(void*userData)
 {
@@ -3182,7 +3182,7 @@ free(conf);
 }
 
 /*:131*//*132:*/
-#line 3148 "./funcsat.w"
+#line 3148 "funcsat.w"
 
 
 void funcsatResize(funcsat*f,variable numVars)
@@ -3197,7 +3197,7 @@ clauseGrowTo(&f->uipClause,numVars);
 intvecGrowTo(&f->analyseToClear,numVars);
 posvecGrowTo(&f->analyseStack,numVars);
 /*72:*/
-#line 1641 "./funcsat.w"
+#line 1641 "funcsat.w"
 
 vec_reason_info_grow_to(f->reason_infos,numVars);
 for(uintptr_t i= f->reason_infos->size;i<numVars;i++){
@@ -3206,19 +3206,19 @@ reason_info_release(f,i);
 f->reason_infos->size= numVars;
 
 /*:72*//*99:*/
-#line 2176 "./funcsat.w"
+#line 2176 "funcsat.w"
 
 ReallocX(f->binvar_heap,numVars+1,sizeof(*f->binvar_heap));
 ReallocX(f->binvar_pos,numVars+1,sizeof(*f->binvar_pos));
 
 
 /*:99*/
-#line 3161 "./funcsat.w"
+#line 3161 "funcsat.w"
 
 for(i= old;i<new;i++){
 variable v= i+1;
 /*42:*/
-#line 1147 "./funcsat.w"
+#line 1147 "funcsat.w"
 
 if(f->watches.capacity<=f->watches.size+2){
 while(f->watches.capacity<=f->watches.size){
@@ -3228,7 +3228,7 @@ ReallocX(f->watches.wlist,f->watches.capacity,sizeof(*f->watches.wlist));
 }
 
 /*43:*/
-#line 1163 "./funcsat.w"
+#line 1163 "funcsat.w"
 
 f->watches.wlist[f->watches.size].size= 0;
 f->watches.wlist[f->watches.size].capacity= 0;
@@ -3242,11 +3242,11 @@ assert(0==watchlist_rest_size(&f->watches.wlist[f->watches.size]));
 
 
 /*:43*/
-#line 1155 "./funcsat.w"
+#line 1155 "funcsat.w"
 
 f->watches.size++;
 /*43:*/
-#line 1163 "./funcsat.w"
+#line 1163 "funcsat.w"
 
 f->watches.wlist[f->watches.size].size= 0;
 f->watches.wlist[f->watches.size].capacity= 0;
@@ -3260,18 +3260,18 @@ assert(0==watchlist_rest_size(&f->watches.wlist[f->watches.size]));
 
 
 /*:43*/
-#line 1157 "./funcsat.w"
+#line 1157 "funcsat.w"
 
 f->watches.size++;
 assert(f->watches.size<=f->watches.capacity);
 
 /*:42*//*73:*/
-#line 1649 "./funcsat.w"
+#line 1649 "funcsat.w"
 
 vec_uintptr_push(f->reason,NO_REASON);
 
 /*:73*//*100:*/
-#line 2182 "./funcsat.w"
+#line 2182 "funcsat.w"
 
 f->binvar_heap[v].var= v;
 f->binvar_heap[v].act= f->conf->getInitialActivity(&v);
@@ -3281,7 +3281,7 @@ assert(f->binvar_pos[v]!=0);
 
 
 /*:100*//*123:*/
-#line 2878 "./funcsat.w"
+#line 2878 "funcsat.w"
 
 if(f->unit_facts_size>=f->unit_facts_capacity){
 ReallocX(f->unit_facts,f->unit_facts_capacity*2,sizeof(*f->unit_facts));
@@ -3292,7 +3292,7 @@ f->unit_facts_size++;
 
 
 /*:123*/
-#line 3164 "./funcsat.w"
+#line 3164 "funcsat.w"
 
 #if 0
 literal l= fs_var2lit(v);
@@ -3325,14 +3325,14 @@ f->trail.capacity= numVars;
 }
 
 /*:132*//*133:*/
-#line 3197 "./funcsat.w"
+#line 3197 "funcsat.w"
 
 void funcsatDestroy(funcsat*f)
 {
 literal i;
 while(f->trail.size> 0)trailPop(f,NULL);
 /*44:*/
-#line 1177 "./funcsat.w"
+#line 1177 "funcsat.w"
 
 
 for(variable i= 1;i<=f->numVars;i++){
@@ -3343,14 +3343,14 @@ free(f->watches.wlist);
 
 
 /*:44*//*74:*/
-#line 1653 "./funcsat.w"
+#line 1653 "funcsat.w"
 
 vec_uintptr_destroy(f->reason);
 vec_reason_info_destroy(f->reason_infos);
 vectorDestroy(&f->reason_hooks);
 
 /*:74*//*98:*/
-#line 2169 "./funcsat.w"
+#line 2169 "funcsat.w"
 
 free(f->binvar_heap);
 free(f->binvar_pos);
@@ -3358,12 +3358,12 @@ f->binvar_heap_size= 0;
 
 
 /*:98*//*124:*/
-#line 2888 "./funcsat.w"
+#line 2888 "funcsat.w"
 
 free(f->unit_facts);
 
 /*:124*/
-#line 3202 "./funcsat.w"
+#line 3202 "funcsat.w"
 
 clauseDestroy(&f->assumptions);
 posvecDestroy(&f->model);
@@ -3394,7 +3394,7 @@ free(f);
 
 
 /*:133*//*134:*/
-#line 3233 "./funcsat.w"
+#line 3233 "funcsat.w"
 
 void funcsatSetupActivityGc(funcsat_config*conf)
 {
@@ -3426,7 +3426,7 @@ return f->lastResult;
 
 
 /*:134*//*135:*/
-#line 3264 "./funcsat.w"
+#line 3264 "funcsat.w"
 
 void backtrack(funcsat*f,variable newLevel,head_tail*facts,bool isRestart)
 {
@@ -3472,7 +3472,7 @@ watches_check(f);
 }
 
 /*:135*//*137:*/
-#line 3314 "./funcsat.w"
+#line 3314 "funcsat.w"
 
 
 funcsat_result startSolving(funcsat*f)
@@ -3506,7 +3506,7 @@ UNUSED(f);
 
 
 /*:137*//*138:*/
-#line 3348 "./funcsat.w"
+#line 3348 "funcsat.w"
 
 
 
@@ -3576,7 +3576,7 @@ return(f->lastResult= FS_UNKNOWN);
 
 
 /*:138*//*139:*/
-#line 3418 "./funcsat.w"
+#line 3418 "funcsat.w"
 
 void funcsatPrintStats(FILE*stream,funcsat*f)
 {
@@ -3806,7 +3806,7 @@ return f->numVars;
 }
 
 /*:139*//*140:*/
-#line 3648 "./funcsat.w"
+#line 3648 "funcsat.w"
 
 void funcsatPrintHeuristicValues(FILE*p,funcsat*f)
 {
@@ -4133,8 +4133,8 @@ return false;
 
 
 
-/*:140*//*156:*/
-#line 4988 "./funcsat.w"
+/*:140*//*154:*/
+#line 4951 "funcsat.w"
 
 void bumpLearnedByLbd(funcsat*f,clause*c)
 {
@@ -4272,4 +4272,4 @@ else return 1;
 
 
 
-/*:156*/
+/*:154*/

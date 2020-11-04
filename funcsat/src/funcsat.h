@@ -1,5 +1,5 @@
 /*11:*/
-#line 252 "./funcsat.w"
+#line 252 "funcsat.w"
 
 #ifndef funcsat_h_included
 #define funcsat_h_included
@@ -7,7 +7,7 @@
 #include <stdlib.h> 
 
 /*13:*/
-#line 282 "./funcsat.w"
+#line 282 "funcsat.w"
 
 #include "funcsat/system.h"
 #include "funcsat/posvec.h"
@@ -15,7 +15,7 @@
 
 
 /*:13*//*17:*/
-#line 413 "./funcsat.w"
+#line 413 "funcsat.w"
 
 typedef enum
 {
@@ -25,7 +25,7 @@ FS_UNSAT= 20
 }funcsat_result;
 
 /*:17*//*23:*/
-#line 789 "./funcsat.w"
+#line 789 "funcsat.w"
 
 typedef struct clause
 {
@@ -47,15 +47,15 @@ struct clause*nx;
 }clause;
 
 /*:23*//*63:*/
-#line 1545 "./funcsat.w"
+#line 1545 "funcsat.w"
 
 enum reason_ty
 {
 REASON_CLS_TY
 };
 
-/*:63*//*150:*/
-#line 4256 "./funcsat.w"
+/*:63*//*148:*/
+#line 4219 "funcsat.w"
 
 typedef struct funcsat funcsat;
 typedef struct funcsat_config
@@ -151,12 +151,12 @@ void(*sweepClauses)(funcsat*,void*);
 
 
 
-/*:150*/
-#line 258 "./funcsat.w"
+/*:148*/
+#line 258 "funcsat.w"
 
 
 /*15:*/
-#line 326 "./funcsat.w"
+#line 326 "funcsat.w"
 
 
 #define CallocX(ptr, n, size)                   \
@@ -187,7 +187,7 @@ void(*sweepClauses)(funcsat*,void*);
 
 
 /*:15*//*24:*/
-#line 811 "./funcsat.w"
+#line 811 "funcsat.w"
 
 clause*clauseAlloc(uint32_t capacity);
 
@@ -225,12 +225,12 @@ void dimacsPrintClause(FILE*f,clause*);
 
 
 /*:24*//*68:*/
-#line 1597 "./funcsat.w"
+#line 1597 "funcsat.w"
 
 void funcsatAddReasonHook(funcsat*f,uintptr_t ty,clause*(*hook)(funcsat*f,literal l));
 
-/*:68*//*146:*/
-#line 4150 "./funcsat.w"
+/*:68*//*144:*/
+#line 4113 "funcsat.w"
 
 struct funcsat_config;
 funcsat*funcsatInit(funcsat_config*conf);
@@ -283,25 +283,25 @@ bool funcsatDebug(funcsat*f,char*label,int level);
 clause*funcsatRemoveClause(funcsat*f,clause*c);
 
 
-/*:146*//*147:*/
-#line 4204 "./funcsat.w"
+/*:144*//*145:*/
+#line 4167 "funcsat.w"
 
 char*funcsatResultAsString(funcsat_result result);
 
 
-/*:147*//*148:*/
-#line 4211 "./funcsat.w"
+/*:145*//*146:*/
+#line 4174 "funcsat.w"
 
 void fs_vig_print(funcsat*f,const char*path);
 
-/*:148*//*162:*/
-#line 5660 "./funcsat.w"
+/*:146*//*160:*/
+#line 5623 "funcsat.w"
 
 funcsat_result fs_parse_dimacs_solution(funcsat*f,FILE*solutionFile);
 
 
-/*:162*/
-#line 260 "./funcsat.w"
+/*:160*/
+#line 260 "funcsat.w"
 
 
 #endif

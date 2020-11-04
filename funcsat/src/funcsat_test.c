@@ -1,4 +1,4 @@
-/*164:*/
-#line 5854 "./funcsat.w"
+/*162:*/
+#line 5817 "funcsat.w"
 
-#include "funcsat.h"/*:164*/
+#include "funcsat.h"/*:162*/
