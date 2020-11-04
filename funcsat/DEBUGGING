@@ -1,0 +1,43 @@
+-*- mode: org -*-
+
+* watcher lists get dup'd clauses in them
+I wrote a nice invariant checker for the watchlists. It showed me that the
+problem first shows up after the first restart.
+
+test case: ./libtool --mode=execute gdb --args ./funcsat --live=no
+--debug=findUips,9 --debug=bcp,9 --debug=solve,9 uf20/uf20-010.cnf
+
+** the problem
+after a conflict, 
+  - the size of the watcher list wasn't set properly
+  - all the watched clauses weren't copied over because *dump wasn't incremented
+
+* clauses get duplicate literals in them
+- [11 Feb 2012 09:33:58] unit facts weren't getting appended to the parameter
+  properly in trailPop
+- at this point everything up to propagate_facts seems okay
+
+* trail was getting duplicate literals in it
+- bcp didn't check whether the other literal is true
+
+* couldn't get head lit in watchlist_elt to be the first lit
+... or even the second lit
+
+I can't think of an easy way to do this.
+
+It's easy initially. When you watch the clause, you copy that first literal into
+the watchlist_elt head.
+
+I can't watch the first literal in both watcher heads, because during BCP I
+might swap the first two literals of the clause. If I do, it means now the
+_other_ watcher doesn't store the first literal in its watcher head anymore. So
+that breaks the invariant because I'm unwilling to travers that other watcher
+list to fix the problem.
+
+So I relaxed the invariant so that the watchlist_elt stores /one of the first
+two/ literals of the clause. This won't be affected by the swapping.
+
+Now, consider BCP. Say the clause looks like |x|y|...|z|... where y is the
+currently false literal and z is some other non-false literal. So you get into
+BCP and you're going to swap y and z (because I always watch the first two
+literals of the clause). Once y and z are swapped

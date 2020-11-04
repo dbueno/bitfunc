@@ -1,0 +1,121 @@
+% -*- noweb-code-mode: text-mode -*-
+
+% Copyright 2012 Sandia Corporation. Under the terms of Contract
+% DE-AC04-94AL85000, there is a non-exclusive license for use of this work by or
+% on behalf of the U.S. Government. Export of this program may require a license
+% from the United States Government.
+
+% \documentclass{article}
+% \usepackage{url}
+% \usepackage{noweb}
+% \pagestyle{noweb}\noweboptions{}
+
+@
+% \begin{document}
+\newcommand{\url}{\textit}
+\section{Introduction}
+
+Program synthesis. Everyone wants it. Right? Let's do it in bitfunc.
+
+We want to find a program that fits a given (finite) set of input-output
+pairs. In other words, the specification is a set of:
+\begin{itemize}
+\item input bit vectors: $I_0 \ldots \I_{n-1}$
+\item output bit vector: $O$
+\end{itemize}
+All inputs and outputs are of size $k$, which is fixed.
+
+We should be able to structure the program like \texttt{program.c}, where we can
+step a program up to a certain length. We want to be able to run the empty
+program and step it some number of times.
+
+The empty program is actually a non-trivial SAT problem because each possible
+program chooses one input as the output. Inductively, the way to understand this
+is that the output of a program must be chosen by the solver, and the
+possibilities are exactly one of (1) the inputs or (2) any operation
+output. Since there are no operations, in the end, there can be only
+(1). (Haha.)
+
+The main thing we'll be solving for is a map of $\{0 \ldots m-1\}$ into
+statements. That is, for each line of a program of length $m$ we need a
+statement to execute. We'll set
+\begin{itemize}
+\item $I_ij$ : boolean
+\end{itemize}
+to true if instruction $i \in \{0 \ldots N-1\}$ is chosen for line $j \in \{0
+\ldots m-1\}$.
+
+<<Global types>>=
+typedef struct pssa_instruction_ pssa_instruction;
+typedef struct pssa_specification_
+{
+  struct {
+    bitvec **input;
+    bitvec  *output;
+  } pair;
+  uint32_t   width;
+  pssa_instruction **instructions;
+  uint32_t           num_instructions;
+
+  literal **solution;
+  uint32_t  len;
+} pssa_specification;
+
+@ The next logical part is the way to represent instructions. Each instruction
+has some implementation and gives one result bit vector. For simplicity, the
+result must be of width $k$, just like the bit vectors in the specification.
+
+<<Global types>>=
+struct pssa_instruction_
+{
+  bitvec *(*pssa_instruction)(bitvec **);
+  uint32_t num_inputs;
+};
+
+<<Global types>>=
+typedef struct pssa_program_
+{
+  bitvec  **inputs;
+  uint32_t  num_inputs;
+  bitvec   *output;
+} pssa_program;
+
+@ Suppose the program has been run for $m >= 0$ steps. Really this means all
+possible programs have been encoded as a circuit for length $m$. We want to run
+it for $p > m$ steps. Since $m$ steps have been constructed, an output bit
+vector (for each specification pair) has been chosen and constrained to be equal
+to its intended output. We stop caring about that equality and extend the
+circuit.
+
+How do we step the program once?
+
+<<Step program>>=
+static void ssaStep(bfman *b, pssa_specification *spec,
+                    pssa_program *prog, uint32_t newlen)
+{
+  for (uint32_t i = spec->len; i < newlen; i++) {
+    for (uint32_t j = 0; j < spec->num_instructions; j++) {
+/*      bitvec *out =
+        bfvSelect(b, spec->solution[i][j],
+          spec->instructions[j] */
+    }
+  }
+}
+
+
+
+<<Includes>>=
+#include <bitfunc.h>
+
+<<program_ssa-nw.c>>=
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdint.h>
+
+<<Includes>>
+
+<<Global types>>
+
+<<Step program>>
+
+

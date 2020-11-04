@@ -1,0 +1,47 @@
+-*- mode: outline -*-
+
+This is bitfunc. It is written and developed by Denis Bueno <denis.bueno@sandia.gov>.
+
+Copyright 2012 Sandia Corporation. Under the terms of Contract
+DE-AC04-94AL85000, there is a non-exclusive license for use of this work by or
+on behalf of the U.S. Government. Export of this program may require a license
+from the United States Government.
+
+* Dependencies
+
+  - autoconf
+  - automake
+  - autoconf-archive (on some systems)
+  - pkg-config
+  - libtool
+  - Cython >= 0.15
+  - gcc (we use a bunch of its optimizations)
+  - picosat-936 (optional, but strongly recommended): http://fmv.jku.at/picosat/picosat-936.tar.gz
+
+If you want to _hack_ on bitfunc, then you need a few more things:
+
+  - Don Knuth's CWEB. funcsat, a SAT solver bundled with bitfunc, uses CWEB.
+
+* Installation
+
+First, untar picosat and compile it with ./configure && make.
+
+curl -O http://fmv.jku.at/picosat/picosat-936.tar.gz
+tar xzf picosat-936.tar.gz
+cd picosat-936 && ./configure && make
+
+Next, compile bitfunc:
+
+./configure --prefix=/path/to/somewhere --with-picosat=/path/to/picosat-936
+make 
+make install
+
+* Python API
+
+Assuming you have Python 2.7-ish with the dev stuff installed, after
+installation to $DIR, add $DIR/lib/python2.7/site-packages to $PYTHONPATH. To
+test, you should be able to do:
+
+    python -c 'import bitfunc'
+
+without problems.

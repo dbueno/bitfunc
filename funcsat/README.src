@@ -1,0 +1,7 @@
+The source is organised as follows:
+
+Command-line front-end: main.c
+
+libfuncsat.a sources: src/*
+
+headers: funcsat.h and src/funcsat/*.h[.in]

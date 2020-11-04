@@ -1,0 +1,40 @@
+#!/bin/sh
+Funcsat="../funcsat"
+# Funcsat="../funcsat-llvm.opt"
+Othersat=picosat
+FuzzCommand="fuzzsat -I 50"
+
+echo "Testing '$Funcsat --live-stats=no $@' against '$Othersat' ..."
+echo "Fuzzer: '$FuzzCommand' ..."
+
+if test \! -f "$Funcsat"; then
+    echo "No funcsat at '$Funcsat' found"
+    exit 1
+fi
+
+if test -z "`which $Othersat`"; then
+    echo "No '$Othersat' found in PATH"
+    exit 1
+fi
+
+
+c=1
+while true; do
+    /bin/echo -n "."
+    File=/tmp/fuzz$c.cnf
+    $FuzzCommand >$File
+    Golden=`picosat -n $File 2>&1 | grep '^s '`
+    Test=`$Funcsat --live-stats=no $@ $File 2>&1 | grep '^s '`
+    
+    if test "$Golden" \!\= "$Test"; then
+        echo ""
+        echo "Error:"
+        echo "file: $File"
+        echo "funcsat: $Test"
+        echo "picosat: $Golden"
+        exit 1
+    else
+        rm -f $File
+    fi
+    c=$((c+1))
+done

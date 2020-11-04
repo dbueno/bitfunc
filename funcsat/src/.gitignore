@@ -1,0 +1,7 @@
+/config.h
+/libFuncsat*
+stamp-h1
+*.o
+*.aux
+.deps/
+/libfuncsat.a

@@ -1,0 +1,167 @@
+% -*- noweb-code-mode: text-mode -*-
+% Copyright 2012 Sandia Corporation. Under the terms of Contract
+% DE-AC04-94AL85000, there is a non-exclusive license for use of this work by or
+% on behalf of the U.S. Government. Export of this program may require a license
+% from the United States Government.
+
+% \documentclass{article}
+% \usepackage{url}
+% \usepackage{noweb}
+% \pagestyle{noweb}\noweboptions{}
+
+@
+% \begin{document}
+\newcommand{\url}{\textit}
+\section{Introduction}
+
+Computing backbones.
+
+A literal $x$ is a \textit{backbone} literal of formula $\phi$ if it has the
+same assignment in every model of $\phi$ \cite{Marques-Silva+:FAIA10}. This is
+the same as saying that $x$ is a backbone if $\phi \wedge x$ is UNSAT.
+
+I already have a function for this:
+
+<<maybefalse>>=
+bool mayBeFalse(bfman *b, literal x);
+
+@ A \texttt{x} is a backbone if \texttt{!mayBeFalse(x)}.
+
+<<is backbone literal>>=
+bool isBackboneLiteral(bfman *b, literal x)
+{
+  return !mayBeFalse(b, x);
+}
+
+@ They came up with this great algorithm.
+
+<<compute backbone>>=
+struct litpos
+{
+  clause *c;
+  posvec *ix;
+};
+static inline literal **clauseLitPos(litpos *pos, literal l)
+{
+  return pos->c->data + pos->ix->data[fs_lit2idx(l)];
+}
+static inline bool clauseContains(litpos *pos, literal l)
+{
+  return pos->ix->data[fs_lit2idx(l)] != UINTMAX_MAX;
+}
+
+<<reduce model>>
+
+void computeBackbone(bfman *b, clause *vars)
+{
+  bfresult issat;
+  struct litpos *varsPos = buildLitPos(vars);
+  clause *ref = clauseAlloc(b->numVars); /* reference assignment */
+  struct litpos *refPos = buildLitPos(ref);
+  bitvec *bb = clauseAlloc(vars->size);
+  funcsat *f = b->funcsat;
+
+  issat = bfSolve(b);
+  if (issat == BF_UNSAT) return;
+
+  reduceModel(f, refPos);
+
+  literal **nextLit;
+  forBv (nextLit, varsPos->c) {
+    if (*nextLit == 0) continue;
+    bfPushAssumption(b, *nextLit);
+    issat = bfSolve(b);
+    if (issat == BF_UNSAT) {
+      bfvPush(bb, -*nextLit); /* backbone identified */
+      bfPopAssumption(b, 1);
+      if (b->assumps->size==0) trailPush(b->funcsat, -*nextLit);
+      continue;
+    }
+
+    reduceModel(f, refPos);
+    literal **lIt;
+    forBv (lIt, varsPos->c) {
+      if (!clauseContains(refPos, *lIt) &&
+          !clauseContains(refPos, -*lIt)) {
+        /* variable filtering */
+        literal **lInVars = clauseLitPos(varsPos, *lIt);
+        *lInVars = 0;
+        lInVars = clauseLitPos(varsPos, -*lIt);
+        *lInVars = 0;
+      }
+    }
+    forBv (lIt, refPos->c) {
+      if (clauseContains(varsPos, *lIt)) {
+        /* variable filtering */
+        literal **lInVars = clauseLitPos(varsPos, *lIt);
+        *lInVars = 0;
+      }
+    }
+  }
+
+}
+
+@ how can we reduce the model.
+
+clear model out. clear litpos. stash the model.
+
+1. walk through the model, pushing literals. If any literal is not needed to
+satisfy any clause, do not add it to the model.
+
+2. (todo) set covering. find (greedy) minimal model that satisfies all
+clauses. associate each variable with the clauses it satisfies.
+
+<<reduce model>>=
+static inline void reduceModel(funcsat *f, litpos *model)
+{
+
+}
+
+
+@ header
+<<backbone-nw.h>>=
+#include <stdint.h>
+#include <stdbool.h>
+
+typedef intmax_t literal;
+typedef uintmax_t variable;
+typedef struct bfman bfman;
+typedef struct clause clause;
+typedef struct posvec posvec;
+
+<<maybefalse>>
+
+void computeBackbone(bfman *b, clause *vars);
+
+
+@ implementation
+
+<<backbone-nw.c>>=
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <string.h>
+#include <strings.h>
+
+#include "backbone.h"
+
+struct clause { int i; };
+struct posvec { int i; };
+
+static inline struct litpos *buildLitPos(clause *c)
+{
+  literal **lIt;
+  struct litpos *p = malloc(sizeof(struct litpos));
+  p->c = c;
+  p->ix = posvecInit(c->size);
+  p->ix->size = c->size;
+  memset(p->ix, UINTMAX_MAX, sizeof(*p->ix) * c->size);
+  forClause (lIt, p->c) {
+    p->ix->data[fs_lit2idx(*lIt)] = lIt - p->c->data;
+  }
+  return p;
+}
+
+<<compute backbone>>
+
+<<reduce model>>

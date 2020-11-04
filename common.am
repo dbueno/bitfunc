@@ -1,0 +1,4 @@
+FS_SRCDIR = $(top_srcdir)/funcsat
+FS_BUILDDIR = $(top_builddir)/funcsat
+FS_INCLUDES = -I$(FS_SRCDIR) -I$(FS_SRCDIR)/src
+FS_LIBS = $(FS_BUILDDIR)/src/libfuncsat.la

@@ -1,0 +1,26 @@
+#ifndef linklist_@SHORTTYPE@_h_included
+#define linklist_@SHORTTYPE@_h_included
+
+struct lkl_@SHORTTYPE@
+{
+  @TYPE@ data;
+  struct lkl_@SHORTTYPE@ *next;
+};
+
+struct lkl_@SHORTTYPE@ *lkl_@SHORTTYPE@_alloc();
+struct lkl_@SHORTTYPE@ *lkl_@SHORTTYPE@_init(@TYPE@ data);
+void lkl_@SHORTTYPE@_destroy(struct lkl_@SHORTTYPE@ *l);
+void lkl_@SHORTTYPE@_destroy_all(struct lkl_@SHORTTYPE@ *l);
+struct lkl_@SHORTTYPE@ *lkl_@SHORTTYPE@_cons(@TYPE@ data, struct lkl_@SHORTTYPE@ *next);
+
+/* iterate over the linked list, possibly altering the list's structure (or
+ * free'ing), the current node. */
+#define for_lkl_@SHORTTYPE@_mutable(node, nx, start) for (node = (start), nx = (node ? node->next : (struct lkl_@SHORTTYPE@*)NULL); node; node = nx, (node ? nx = node->next : (struct lkl_@SHORTTYPE@*)NULL))
+
+/* iterate over the linked list. the caller must not modify the list's structure
+ * through the current node */
+#define for_lkl_@SHORTTYPE@(node, start) for (node = (start); node; node = node->next)
+
+#endif
+
+

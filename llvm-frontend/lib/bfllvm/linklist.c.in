@@ -1,0 +1,34 @@
+#include "linklist_@SHORTTYPE@.h"
+
+struct lkl_@SHORTTYPE@ *lkl_@SHORTTYPE@_alloc()
+{
+  struct lkl_@SHORTTYPE@ *r = (struct lkl_@SHORTTYPE@*)calloc(1, sizeof(*r));
+  return r;
+}
+
+struct lkl_@SHORTTYPE@ *lkl_@SHORTTYPE@_init(@TYPE@ data)
+{
+  struct lkl_@SHORTTYPE@ *r = lkl_@SHORTTYPE@_alloc();
+  r->data = data;
+  return r;
+}
+
+void lkl_@SHORTTYPE@_destroy(struct lkl_@SHORTTYPE@ *l)
+{
+  free(l);
+}
+
+void lkl_@SHORTTYPE@_destroy_all(struct lkl_@SHORTTYPE@ *l)
+{
+  struct lkl_@SHORTTYPE@ *n = l->next;
+  lkl_@SHORTTYPE@_destroy(l);
+  if (n) lkl_@SHORTTYPE@_destroy_all(n);
+}
+
+struct lkl_@SHORTTYPE@ *lkl_@SHORTTYPE@_cons(@TYPE@ data, struct lkl_@SHORTTYPE@ *next)
+{
+  struct lkl_@SHORTTYPE@ *r = lkl_@SHORTTYPE@_init(data);
+  r->next = next;
+  return r;
+}
+

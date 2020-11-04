@@ -1,0 +1,29 @@
+# use this script to minimise a cnf file where picosat (or some other solver)
+# and funcsat differ:
+#
+# $ cnfdd -m -t fuzz3432.cnf min.cnf ./compare-picosat
+
+File="$1"
+Funcsat="../funcsat"
+
+if test -z "$File"; then
+    echo "missing cnf file"
+    exit 1
+fi
+
+if test \! -f "$Funcsat"; then
+    echo "No funcsat at '$Funcsat' found"
+    exit 1
+fi
+
+golden=`picosat $File 2>&1 | grep '^s '`
+funcresult=`$Funcsat $@ $File 2>&1 | grep '^s '`
+
+echo $@ $File>>out.txt
+
+echo golden $golden funcresult $funcresult >>out.txt
+if test "$golden" \!\= "$funcresult"; then
+    exit 5
+else
+    exit 0
+fi

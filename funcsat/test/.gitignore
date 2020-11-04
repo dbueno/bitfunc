@@ -1,0 +1,5 @@
+.deps/
+test-*
+/fuzz*.cnf
+!test-*.c
+!test-*.sh

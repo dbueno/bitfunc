@@ -1,0 +1,31 @@
+
+* general
+** TODO picosat incremental doesn't work. why not?
+
+** CANCELLED add ABC instead of aiger.c
+   - State "CANCELLED"  from "TODO"       [2012-05-25 Fri 08:25] \\
+     I added ABC.
+
+** CANCELLED decouple underlying AIG from literals in bitfunc
+  - State "CANCELLED"  from "TODO"       [2012-05-25 Fri 08:26] \\
+    I'm not doing this in C until I've prototyped an abstraction mechanism in python.
+this might be sort of already done because of the literal datatype and
+lit_bf2aiger and litAIG2CNF. eventually I want to be able to do word-level
+solving/simplification inside bitfunc before passing to the solver. or even
+abstraction.
+
+** TODO implement the concrete emulation
+whenever all the arguments are concrete to +, call the machine +
+** TODO remove calls to funcsat functions (like resize) if you're
+not using funcsat in bitfunc
+** TODO check for llvm-py during configure step and enable if there
+
+* llvm frontend
+** TODO implement llvm symex for popcnt_x86
+   - formals in env
+   - globals
+   - data structure for state arrangement
+   - opcode switch
+   - forking
+   - PHI handling
+   - RET handling

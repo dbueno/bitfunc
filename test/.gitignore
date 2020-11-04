@@ -1,0 +1,9 @@
+*.aig
+/*.trs
+/*.tex
+/*.log
+/*.scn
+/*.idx
+/*.toc
+/gcd2
+/machine_state_test
