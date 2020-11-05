@@ -457,7 +457,9 @@ cdef class bitvec:
     Returns bv where bv[i] = l[i]"""
     ret = vAlloc(b, len(l))
     for x in l:
-      ret.vPush(literal.fromBool(b, x))
+      if not isinstance(x, literal): 
+        x = literal.fromBool(b, x)
+      ret.vPush(x)
     return ret
 
   @classmethod
